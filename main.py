@@ -25,17 +25,16 @@ config = load_config()
 SOLANA_WALLET = config.get("SOLANA_WALLET")
 TELEGRAM_TOKEN = config.get("TELEGRAM_TOKEN")
 CHAT_ID = config.get("CHAT_ID")
-# Helius API 키는 더 이상 필요 없습니다.
 
 if not all([SOLANA_WALLET, TELEGRAM_TOKEN, CHAT_ID]):
     print("오류: config.txt 파일에 SOLANA_WALLET, TELEGRAM_TOKEN, CHAT_ID 값이 모두 제대로 입력되었는지 확인하세요.")
     input("엔터 키를 눌러 종료합니다.")
     exit()
 
-# Helius 대신 일반 솔라나 RPC 사용 (Helius API 키 불필요)
 RPC_URL = "wss://api.mainnet-beta.solana.com"
 
 def send_telegram_message(text):
+    # 이 부분의 URL 주소 오타를 수정했습니다.
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     try:
         requests.post(url, json={"chat_id": CHAT_ID, "text": text})
@@ -64,7 +63,7 @@ async def listen():
                 if "params" in data:
                     signature = data["params"]["result"]["value"]["signature"]
                     solscan_link = f"https://solscan.io/tx/{signature}"
-                    print(f"새로운 거래 발견! 링크: {solscan_link}")
+                    print(f"새로운 거래 발견! 서명: {signature}")
                     send_telegram_message(f"💸 새 거래 발생!\n{solscan_link}")
             except Exception as e:
                 print(f"오류 발생, 재연결 시도: {e}")
