@@ -22,7 +22,7 @@ jobs:
         pip install --no-cache-dir -r requirements.txt
 
     - name: Build the executable with PyInstaller
-      run: pyinstaller --onefile --clean main.py
+      run: pyinstaller --onefile --clean --hidden-import=helius main.py
 
     - name: Upload the executable as an artifact
       uses: actions/upload-artifact@v4
