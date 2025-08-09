@@ -1,3 +1,4 @@
 pyinstaller
 websockets
 requests
+helius-sdk
